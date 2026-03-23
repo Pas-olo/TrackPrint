@@ -14,21 +14,12 @@ Data is stored **locally on your device** and never sent to any server.
 
 </div>
 
-## 📱 Installation
+## 📱 Get TravelPrint
 
-### Android
-1. Download and install the APK from the [Releases](https://github.com/Pas-olo/TravelPrint/releases) page.
-2. Open the APK and follow the instructions to install the app.
+1. **Android:** Download and install the APK from the [Releases](https://github.com/Pas-olo/TravelPrint/releases) page. Open it and follow the instructions.  
+2. **iOS / Web:** Open [TravelPrint Web](https://pasolo.pythonanywhere.com/) in Safari → tap **Share** → select **Add to Home Screen**. It works like a normal app!  
 
-### iOS / Web
-1. Open [TravelPrint Web](https://pasolo.pythonanywhere.com/) in Safari.
-2. Tap the **Share** button (square with an arrow pointing up).
-3. Select **Add to Home Screen**.
-4. The icon will appear on your home screen like a normal app.
-
-> ⚡ Tip: Even without an App Store version for iOS, this method lets you use TravelPrint like a real app!
-> ⚠️ Note: On iOS, app data is stored in the browser cache. It **may be cleared by the system**, so make sure to back up your data regularly using the "Export Data" feature.
-
+> ⚠️ Note: On iOS, data is stored in the browser cache and **may be cleared by the system**. Make sure to back up your data regularly using the "Export Data" feature.
 
 ## Screenshots
 
