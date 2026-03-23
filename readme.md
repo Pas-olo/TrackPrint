@@ -60,7 +60,7 @@ Full methodology is available in the app under **Data → Methodology**.
 ### Steps
 
 ```bash
-git clone https://github.com/Pas-olo/TrackPrint.git
+git clone https://github.com/Pas-olo/TravelPrint.git
 cd TravelPrint
 
 npm install
