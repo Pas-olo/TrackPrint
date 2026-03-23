@@ -1,4 +1,10 @@
 {
+  "name": "travelprint",
+  "version": "26.03.23",
+  "scripts": {
+    "sync": "cap sync android",
+    "open": "cap open android"
+  },
   "dependencies": {
     "@capacitor/android": "^8.2.0",
     "@capacitor/cli": "^8.2.0",
