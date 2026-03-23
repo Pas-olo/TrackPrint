@@ -8,6 +8,9 @@ local.properties
 Thumbs.db
 .vscode/
 .idea/
+/android/keystore/
+/android/*.keystore
+/android/*.jks
 /android/app/build/
 /android/.gradle/
 /android/build/

@@ -40,19 +40,8 @@ Data is stored **locally on your device** and never sent to any server.
 
 ## CO2 methodology
 
-All emission factors are in **kgCO2e/km** and include upstream emissions. Key sources:
-
-| Mode | Factor |
-|------|--------|
-| ✈️ Plane (economy, short-haul) | 0.126 kgCO2e/km |
-| ✈️ Plane (economy, long-haul) | 0.117 kgCO2e/km |
-| 🚆 Train | 0.00446 kgCO2e/km |
-| 🚗 Car (thermal, sedan, solo) | ~0.217 kgCO2e/km |
-| 🚌 Coach | 0.030 kgCO2e/km |
-| ⛵ Ferry (foot passenger) | 0.019 kgCO2e/km |
-| 🚴 Cycling / 🚶 Walking | 0 kgCO2e/km |
-
-Electric vehicles use the electricity emission factor of the country recorded for that day (source: Ember 2024). Full methodology is available in the app under **Data → Methodology**.
+All emission factors are in **kgCO2e/km** and include upstream emissions. 
+Full methodology is available in the app under **Data → Methodology**.
 
 ## Install
 
@@ -84,7 +73,7 @@ npx cap sync android
 npx cap open android
 ```
 
-The raw web app (no Capacitor) can also be run directly by opening `index.html` in a browser.
+The raw web app (no Capacitor) can also be run directly by opening `src/index.html` in a browser.
 
 ## License
 
