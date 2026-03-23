@@ -45,7 +45,7 @@ Full methodology is available in the app under **Data → Methodology**.
 
 ## Install
 
-**Android** — download the latest APK from [GitHub Releases](https://github.com/Pas-olo/TrackPrint/releases/latest) and install it on your device.
+**Android** — download the latest APK from [GitHub Releases](https://github.com/Pas-olo/TravelPrint/releases/latest) and install it on your device.
 > You may need to allow installation from unknown sources in your Android settings.
 
 **Web** — try the live demo at [pasolo.pythonanywhere.com](https://pasolo.pythonanywhere.com/) (no install needed).
