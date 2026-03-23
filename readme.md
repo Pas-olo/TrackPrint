@@ -6,7 +6,7 @@ Data is stored **locally on your device** and never sent to any server.
 
 <div align="center">
 
-[![Download](https://img.shields.io/github/v/release/Pas-olo/TrackPrint?label=⬇️%20Download%20APK&style=for-the-badge&color=2ea44f)](https://github.com/Pas-olo/TrackPrint/releases/latest)
+[![Download](https://img.shields.io/github/v/release/Pas-olo/TravelPrint?label=⬇️%20Download%20APK&style=for-the-badge&color=2ea44f)](https://github.com/Pas-olo/TravelPrint/releases/latest)
 &nbsp;
 [![Try the web demo](https://img.shields.io/badge/🌐%20Web%20demo-live-blue?style=for-the-badge)](https://pasolo.pythonanywhere.com/)
 &nbsp;
