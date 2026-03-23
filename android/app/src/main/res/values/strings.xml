@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">TrackPrint</string>
+    <string name="title_activity_main">TrackPrint</string>
+    <string name="package_name">com.trackprint.app</string>
+    <string name="custom_url_scheme">com.trackprint.app</string>
+</resources>

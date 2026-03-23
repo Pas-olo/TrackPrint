@@ -1,0 +1,67 @@
+iso_code,country,annual_co2_kg
+US,United States,14700
+AU,Australia,14800
+CA,Canada,14200
+SA,Saudi Arabia,18500
+KW,Kuwait,22000
+AE,United Arab Emirates,20000
+NZ,New Zealand,7200
+DE,Germany,7900
+BE,Belgium,8100
+NL,Netherlands,7600
+AT,Austria,7100
+FI,Finland,8400
+NO,Norway,6800
+DK,Denmark,5800
+IE,Ireland,7900
+GB,United Kingdom,5500
+JP,Japan,8400
+KR,South Korea,11800
+IT,Italy,5700
+FR,France,4600
+ES,Spain,5500
+PT,Portugal,4800
+GR,Greece,6200
+PL,Poland,9200
+CZ,Czech Republic,8700
+RU,Russia,11200
+CN,China,8200
+MX,Mexico,3800
+BR,Brazil,2300
+AR,Argentina,4300
+ZA,South Africa,7500
+TR,Turkey,5200
+TH,Thailand,3500
+MY,Malaysia,7900
+ID,Indonesia,2200
+VN,Vietnam,2600
+PH,Philippines,1400
+IN,India,1900
+PK,Pakistan,1000
+BD,Bangladesh,600
+NG,Nigeria,600
+ET,Ethiopia,130
+KE,Kenya,400
+TZ,Tanzania,200
+MA,Morocco,1800
+EG,Egypt,2400
+DZ,Algeria,3700
+TN,Tunisia,2400
+UZ,Uzbekistan,3800
+KZ,Kazakhstan,13700
+UA,Ukraine,4400
+RO,Romania,4200
+HU,Hungary,4800
+HR,Croatia,3900
+RS,Serbia,5100
+BG,Bulgaria,6400
+SK,Slovakia,6100
+SI,Slovenia,5700
+LT,Lithuania,4800
+LV,Latvia,3700
+EE,Estonia,9200
+CH,Switzerland,4200
+SE,Sweden,3600
+CL,Chile,4700
+CO,Colombia,1800
+PE,Peru,1800
