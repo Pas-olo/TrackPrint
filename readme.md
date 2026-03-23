@@ -20,7 +20,7 @@ Data is stored **locally on your device** and never sent to any server.
 
 ## Screenshots
 
-| <img src="assets/home.png" width="180"> | <img src="assets/stats.png" width="180"> | <img src="assets/table.png" width="180"> | <img src="assets/add.png" width="180"> |
+<img src="assets/home.png" width="180"><img src="assets/stats.png" width="180"><img src="assets/table.png" width="180"><img src="assets/add.png" width="180">
 
 
 ---
