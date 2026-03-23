@@ -14,8 +14,6 @@ Data is stored **locally on your device** and never sent to any server.
 
 </div>
 
----
-
 ## 📱 Platforms
 
 | Platform | Supported |
@@ -24,14 +22,10 @@ Data is stored **locally on your device** and never sent to any server.
 | Web | ✅ Online demo |
 | iOS | ❌ Not supported |
 
----
-
 ## Screenshots
 
 <img src="assets/home.png" width="180"> <img src="assets/stats.png" width="180"> <img src="assets/table.png" width="180"> <img src="assets/add.png" width="180">
 
-
----
 
 ## Features
 
@@ -95,8 +89,6 @@ The raw web app (no Capacitor) can also be run directly by opening `index.html` 
 ## License
 
 MIT — see [LICENSE](LICENSE)
-
----
 
 *Borders, flags, and map data are based on available source files and libraries, and do not reflect any political stance or militant viewpoint.*
 
