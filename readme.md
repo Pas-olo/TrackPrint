@@ -22,9 +22,9 @@ Data is stored **locally on your device** and never sent to any server.
 > ⚠️ Note: On iOS, data is stored in the browser cache and **may be cleared by the system**. Make sure to back up your data regularly using the "Export Data" feature.
 
 ## Screenshots
-
+<div align="center">
 <img src="assets/home.png" width="180"> <img src="assets/stats.png" width="180"> <img src="assets/table.png" width="180"> <img src="assets/add.png" width="180">
-
+</div>
 
 ## Features
 
