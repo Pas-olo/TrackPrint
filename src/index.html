@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#0f0f1a">
+<title>TrackPrint</title>
+<link rel="icon" type="image/png" href="logo.png">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="statusbar-spacer"></div>
+
+<div class="header">
+  <div class="header-title" id="header-title">📊 TrackPrint</div>
+</div>
+
+<div class="screens-wrap">
+
+  <!-- ══ STATS ══ -->
+  <div class="screen active" id="screen-stats">
+    <div class="year-row">
+      <button class="year-btn" onclick="changeStatsYear(-1)">‹</button>
+      <span class="year-text" id="stats-year-lbl">2026</span>
+      <button class="year-btn" onclick="changeStatsYear(1)">›</button>
+    </div>
+
+    <div class="badge-row">
+      <div class="badge" style="background:#4e73df"><span class="badge-val" id="stat-days">0</span><span class="badge-lbl">📅 Days</span></div>
+      <div class="badge" style="background:#36b9cc"><span class="badge-val" id="stat-km">0</span><span class="badge-lbl">📏 km</span></div>
+      <div class="badge" style="background:#e74a3b"><span class="badge-val" id="stat-co2">0</span><span class="badge-lbl">☁️ kgCO2e</span></div>
+    </div>
+    <div class="badge-row">
+      <div class="badge" style="background:#6c5ce7"><span class="badge-val" id="stat-intensity">—</span><span class="badge-lbl">⚡ efficiency in gCO2e/km</span></div>
+      <div class="badge" style="background:#00b894"><span class="badge-val" id="stat-streak">—</span><span class="badge-lbl">🌍 country streak since last ✈️</span></div>
+    </div>
+
+    <div class="carbon-eq-card" id="carbon-eq-card"></div>
+
+    <!-- Carousel by transport mode -->
+    <div class="chart-box">
+      <div class="chart-title">🏆 Best trip by transport mode</div>
+      <div class="carousel-wrap">
+        <div class="carousel-track" id="top-trips-track"></div>
+        <div class="carousel-dots" id="carousel-dots"></div>
+      </div>
+    </div>
+
+    <div class="chart-box">
+      <div class="chart-title">Time per country</div>
+      <canvas id="chart-country" height="220"></canvas>
+      <div class="legend" id="legend-country"></div>
+    </div>
+
+    <div class="chart-box">
+      <div class="chart-title">Monthly distances (km)</div>
+      <canvas id="chart-km" height="180"></canvas>
+      <div class="legend" id="legend-km"></div>
+    </div>
+
+    <div class="chart-box">
+      <div class="chart-title">Monthly carbon footprint (kgCO2e)</div>
+      <canvas id="chart-co2" height="180"></canvas>
+      <div class="legend" id="legend-co2"></div>
+    </div>
+
+    <!-- Map section -->
+    <div class="chart-box map-inline-box">
+      <div class="map-header">
+        <span class="map-title">🗺️ Countries visited</span>
+        <span class="map-count" id="map-count-inline">0 countries visited</span>
+      </div>
+      <div id="map-section-wrap"></div>
+      <div class="map-legend">
+        <div class="map-legend-item"><div class="map-dot" style="background:#4e9af1"></div><span>Visited</span></div>
+        <div class="map-legend-item"><div class="map-dot" style="background:#1a2a3a"></div><span>Not visited</span></div>
+        <button id="map-reset-btn" onclick="resetMapView()">↺ Reset</button>
+      </div>
+      <div id="map-country-list-inline"></div>
+    </div>
+
+    <!-- CO2 ranking -->
+    <div class="chart-box" id="co2-ranking"></div>
+  </div>
+
+  <!-- ══ CALENDAR ══ -->
+  <div class="screen" id="screen-calendar">
+    <div class="year-row" style="margin-bottom:6px">
+      <button class="year-btn" onclick="changeCalYear(-1)">‹</button>
+      <span class="year-text" id="cal-year-lbl">2026</span>
+      <button class="year-btn" onclick="changeCalYear(1)">›</button>
+    </div>
+    <div class="month-nav-bar" id="cal-month-bar"></div>
+    <div id="calendar-month-view"></div>
+
+    <!-- FAB: add transport (orange, left) -->
+    <button class="fab fab-left fab-orange" onclick="openTransportFromFab()" title="Add a trip">🚗</button>
+    <!-- FAB: add note (purple, center) -->
+    <button class="fab fab-center fab-purple" onclick="openNoteFromFab()" title="Add a note">📝</button>
+    <!-- FAB: add stay (green, right) -->
+    <button class="fab" onclick="openStayModal()" title="Add a stay">🌍</button>
+  </div>
+
+  <!-- ══ LOG / TABLE ══ -->
+  <div class="screen" id="screen-log">
+    <div class="year-row" style="margin-bottom:6px">
+      <button class="year-btn" onclick="changeLogYear(-1)">‹</button>
+      <span class="year-text" id="log-year-lbl">2026</span>
+      <button class="year-btn" onclick="changeLogYear(1)">›</button>
+    </div>
+    <div class="month-nav-bar" id="log-month-bar"></div>
+    <div id="log-month-view"></div>
+  </div>
+
+
+  <!-- ══ DATA ══ -->
+  <div class="screen" id="screen-data">
+
+    <div class="section-title">EXPORT</div>
+    <div class="card">
+      <p class="card-desc">Generate a <code>.json</code> file with all your stays, notes and transports. Send it by email or save to your files.</p>
+      <button class="btn-blue" onclick="exportData()">📤  Export data</button>
+    </div>
+
+    <div class="section-title">IMPORT</div>
+    <div class="card">
+      <p class="card-desc">Restore from a previously exported <code>.json</code> file. Works across devices.</p>
+      <div class="warning-box">⚠️ Import replaces all existing data. Export first if you want to keep your current data.</div>
+      <input type="file" id="import-input" accept=".json" style="display:none" onchange="importData(event)">
+      <button class="btn-teal" onclick="document.getElementById('import-input').click()">📥  Import a file</button>
+    </div>
+
+    <div class="section-title">GLOBAL STATS</div>
+    <div class="card" id="global-stats-card"></div>
+ 
+    <div class="section-title">HOW TO FIND DISTANCES</div>
+    <div class="card">
+      <p class="card-desc" style="font-weight:600;color:#ddd;margin-bottom:12px">Not sure what distance to enter? Here are some tips by transport type.</p>
+ 
+      <p class="method-mode">✈️ Plane</p>
+      <p class="card-desc">Use the <strong>great-circle distance</strong> (straight line between airports). Tools like <a href="https://www.airmilescalculator.com/" target="_blank" style="color:#4e9af1">airmilescalculator.com</a> give you the exact distance between any two airports.</p>
+ 
+      <p class="method-mode">🚆 Train · 🚌 Bus · 🚗 Car · 🚴 Bike · ⛵ Boat</p>
+      <p class="card-desc">Use the actual route distance. <a href="https://brouter.damsy.net/" target="_blank" style="color:#4e9af1">brouter.damsy.net</a> is a great tool that calculates precise itinerary distances for all these modes. Google Maps or any navigation can app works too.</p>
+
+	</div>
+
+    <div class="section-title">METHODOLOGY</div>
+    <div class="card">
+      <p class="card-desc" style="font-weight:600;color:#ddd;margin-bottom:4px">How are CO2e emissions calculated?</p>
+      <p class="card-desc" style="margin-bottom:12px">All factors are in <strong>kgCO2 equivalent per km</strong> and include upstream emissions (extraction, refining, transport). Radiative forcing is included where relevant.</p>
+
+      <p class="method-mode">✈️ Plane — DEFRA 2025</p>
+      <p class="card-desc">Radiative forcing already included in all factors. Short-haul (&lt;3,700 km): <strong>Economy 0.126 kgCO2e/km</strong> · <strong>Business 0.189 kgCO2e/km</strong> (no Premium Eco or First on short-haul — redirected to Economy/Business). Long-haul: <strong>Economy 0.117 kgCO2e/km</strong> · <strong>Premium Eco 0.187 kgCO2e/km</strong> · <strong>Business 0.339 kgCO2e/km</strong> · <strong>First 0.468 kgCO2e/km</strong>.</p>
+
+      <p class="method-mode">🚆 Train — DEFRA 2025</p>
+      <p class="card-desc">Single international average factor: <strong>0.00446 kgCO2e/km</strong>.</p>
+
+      <p class="method-mode">🚗 Car — DEFRA 2025</p>
+      <p class="card-desc">Thermal FE: <strong>3.1 kgCO2e/L</strong> (average fuel, upstream included). Consumption by type: Sedan 7L · Hybrid 4L · SUV 9L · Van 10L · Motorcycle 4L per 100km. Total trip emissions divided by number of passengers.</p>
+      <p class="card-desc" style="margin-top:4px">Electric vehicles use consumption (Small EV 15 kWh per 100km · SUV EV 22 kWh per 100km · Van EV 30 kWh per 100km) × the electricity emission factor of the country recorded for that day. Fallback: world average <strong>0.471 kgCO2e/kWh</strong> (Ember).</p>
+
+      <p class="method-mode">🚌 Bus</p>
+      <p class="card-desc">Per-passenger factors: Coach <strong>0.030 kgCO2e/km</strong> · Sleeper <strong>0.080 kgCO2e/km</strong> · City bus <strong>0.100 kgCO2e/km</strong> · Minibus <strong>0.050 kgCO2e/km</strong>.</p>
+
+      <p class="method-mode">⛵ Boat — DEFRA 2025</p>
+      <p class="card-desc">Foot passenger: <strong>0.01871 kgCO2e/km</strong> · Car passenger (with vehicle): <strong>0.12933 kgCO2e/km</strong>.</p>
+
+      <p class="method-mode">🚴 Cycling / 🚶 Walking</p>
+      <p class="card-desc">Considered carbon-neutral — <strong>0 kgCO2e</strong>.</p>
+
+      <p class="method-mode">🔖 Other</p>
+      <p class="card-desc">Uses your custom emission factor (kgCO2e/km). Must be a valid positive number, otherwise 0.</p>
+
+      <p class="card-desc" style="margin-top:12px;color:#555;font-size:10px">Sources: DEFRA 2025 Greenhouse Gas Conversion Factors · Ember Global Electricity Review 2024 · Our World in Data — consumption-based CO2 emissions per capita, 2023</p>
+    </div>
+
+    <div class="section-title">ABOUT</div>
+    <div class="card">
+      <p class="card-desc" style="font-weight:600;color:#ddd;margin-bottom:8px">TrackPrint</p>
+      <p class="card-desc">A personal travel diary to track the countries you visit, the distances you travel, and the carbon footprint of your journeys.</p>
+      <p class="card-desc" style="margin-top:8px">Data is stored locally on your device and never sent to any server.</p>
+	  <p class="card-desc" style="margin-top:8px">Borders, flags, and map data are based on available source files and librairies, and do not reflect any political stance or militant viewpoint.</p>
+      <p class="card-desc" style="margin-top:8px;color:#555;font-size:11px">Version 26.03.23 · <a href='https://github.com/Pas-olo/TravelPrint' target="_blank" style="color:#4e9af1">Source code</a> · Paolo Sévègnes · MIT License️</p> 
+      <button class="btn-delete-all" onclick="openDeleteAllModal()" style="margin-top:18px">🗑️  Delete all data</button>
+    </div>
+
+  </div>
+</div>
+
+<!-- Delete all data modal -->
+<div class="modal-overlay" id="delete-all-modal">
+  <div class="modal-box">
+    <div class="modal-title" style="color:#e74a3b">⚠️ Delete all data</div>
+    <p class="card-desc" style="margin-bottom:10px">This action is <strong style="color:#e74a3b">irreversible</strong>. All your stays, trips and notes will be permanently erased.</p>
+    <p class="card-desc" style="margin-bottom:16px">Make sure you've exported your data first before proceeding.</p>
+    <div class="form-label">TYPE THE FOLLOWING TO CONFIRM</div>
+    <div style="background:#1a1a2e;border-radius:8px;padding:10px 14px;margin-bottom:12px;font-size:13px;font-weight:700;color:#e74a3b;letter-spacing:0.5px;text-align:center;">Tyé un tigre</div>
+    <input class="inp" id="delete-confirm-input" placeholder="Type the phrase here…" style="width:100%;margin-bottom:4px" oninput="checkDeletePhrase()">
+    <div id="delete-phrase-hint" style="font-size:10px;color:var(--muted);margin-bottom:14px;min-height:14px"></div>
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closeDeleteAllModal()">Cancel</button>
+      <button class="btn-delete-confirm" id="btn-delete-confirm" onclick="confirmDeleteAll()" disabled>Delete everything</button>
+    </div>
+  </div>
+</div>
+
+<!-- Tab bar -->
+<div class="tabbar">
+  <div class="tab active" id="tab-stats"    onclick="switchTab('stats')">
+    <span class="tab-icon">📊</span><span class="tab-label">Stats</span>
+  </div>
+  <div class="tab" id="tab-calendar" onclick="switchTab('calendar')">
+    <span class="tab-icon">🗓</span><span class="tab-label">Calendar</span>
+  </div>
+  <div class="tab" id="tab-log"      onclick="switchTab('log')">
+    <span class="tab-icon">📋</span><span class="tab-label">Table</span>
+  </div>
+  <div class="tab" id="tab-data"     onclick="switchTab('data')">
+    <span class="tab-icon">💾</span><span class="tab-label">Data</span>
+  </div>
+</div>
+
+<!-- ══════════ MODALS ══════════ -->
+
+<!-- Stay modal -->
+<div class="modal-overlay" id="stay-modal">
+  <div class="modal-box">
+    <div class="modal-title">Add a stay</div>
+    <div class="form-label">COUNTRY</div>
+    <div class="select-wrap" style="margin-bottom:14px">
+      <select id="stay-country-select"></select>
+    </div>
+    <div class="form-label">DATES</div>
+    <div class="date-row">
+      <div class="date-btn" onclick="openDatePicker('stay-start')">
+        <div class="date-btn-lbl">Start</div>
+        <div class="date-btn-val" id="stay-start-display">—</div>
+        <input type="date" id="stay-start-input" style="position:absolute;opacity:0;width:0;height:0">
+      </div>
+      <div class="date-arrow">→</div>
+      <div class="date-btn" onclick="openDatePicker('stay-end')">
+        <div class="date-btn-lbl">End</div>
+        <div class="date-btn-val" id="stay-end-display">—</div>
+        <input type="date" id="stay-end-input" style="position:absolute;opacity:0;width:0;height:0">
+      </div>
+    </div>
+    <div class="nb-jours" id="stay-nb-days">— days</div>
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closeStayModal()">Cancel</button>
+      <button class="btn-save"   onclick="saveStay()">Save stay</button>
+    </div>
+  </div>
+</div>
+
+<!-- Transport modal -->
+<div class="modal-overlay" id="transport-modal">
+  <div class="modal-box modal-tall">
+    <div class="modal-title" id="transport-modal-title"></div>
+    <div class="country-badge" id="transport-country-badge"></div>
+
+    <div class="form-label">TRANSPORT MODE</div>
+    <div class="mode-grid" id="mode-grid"></div>
+
+    <!-- Route (mandatory) -->
+    <div class="form-label" style="margin-top:10px">ROUTE <span style="color:var(--red)">*</span></div>
+    <div class="tr-row" style="margin-bottom:8px">
+      <input class="inp flex" id="tr-from" placeholder="From">
+      <input class="inp flex" id="tr-to"   placeholder="To">
+      <input class="inp km"   id="tr-km"   placeholder="km" type="number">
+    </div>
+
+    <!-- Dynamic details -->
+    <div id="tr-details-wrap">
+      <div class="form-label">DETAILS <span style="color:var(--muted);font-size:9px">(optional)</span></div>
+      <div class="tr-detail-fields" id="tr-details-fields"></div>
+    </div>
+
+    <!-- Notes (all modes) -->
+    <div class="form-label" style="margin-top:10px">NOTES <span style="color:var(--muted);font-size:9px">(optional)</span></div>
+    <textarea class="inp" id="tr-notes" placeholder="Add notes, comments…" style="width:100%;height:64px;resize:none;margin-bottom:8px;line-height:1.4"></textarea>
+
+    <div id="multi-transport-list"></div>
+    <button class="btn-add-row" id="btn-add-trip" onclick="commitTransportRow()">+ Add another trip</button>
+
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closeTransportModal()">Close</button>
+      <button class="btn-save"   onclick="saveTransports()">Save</button>
+    </div>
+  </div>
+</div>
+
+<!-- Date picker modal -->
+<div class="modal-overlay" id="date-modal">
+  <div class="modal-box">
+    <div class="modal-title" id="date-modal-title">Select a date</div>
+    <input type="date" id="date-picker-input" class="date-picker-input">
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closeDateModal()">Cancel</button>
+      <button class="btn-save"   onclick="confirmDatePicker()">Confirm</button>
+    </div>
+  </div>
+</div>
+
+<!-- Trip detail popup -->
+<div class="modal-overlay" id="trip-detail-modal">
+  <div class="modal-box">
+    <div id="trip-detail-content"></div>
+  </div>
+</div>
+
+<!-- Duplicate trip modal -->
+<div class="modal-overlay" id="dup-modal">
+  <div class="modal-box">
+    <div class="modal-title">⎘ Duplicate trip</div>
+    <div class="country-badge" id="dup-modal-route" style="margin-bottom:14px;color:var(--text)"></div>
+    <div class="form-label">NEW DATE</div>
+    <input type="date" id="dup-date-input" class="date-picker-input">
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closeDupModal()">Cancel</button>
+      <button class="btn-save"   onclick="confirmDuplicate()">Duplicate</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="countries.js"></script>
+<script src="emissions.js"></script>
+<script src="modes.js"></script>
+<script src="elec_fe.js"></script>
+<script src="demo.js"></script>
+<script src="db.js"></script>
+<script src="co2.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
